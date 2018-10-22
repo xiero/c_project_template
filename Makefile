@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -Wextra -Isrc -rdynamic -DNDEBUG $(OPTFLAGS)
+CFLAGS=-g -Wall -Wextra -Isrc -rdynamic -DNDEBUG -Wl,--no-as-needed -ldl $(OPTFLAGS)
 LIBS=-ldl $(OPTLIBS)
 PREFIX?=/usr/local
 
@@ -9,7 +9,8 @@ TEST_SRC=$(wildcard tests/*_tests.c)
 TESTS=$(patsubst %.c,%,$(TEST_SRC))
 
 TARGET=build/libYOUR_LIBRARY.a
-SO_TARGET=$(patsubst %.a, %.so,$(TARGET))
+SO_TARGET=$(patsubst %.a,%.so,$(TARGET))
+
 #The Target Build
 all: $(TARGET) $(SO_TARGET) tests
 
